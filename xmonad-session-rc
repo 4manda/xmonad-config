@@ -5,35 +5,41 @@
 
 
 # Configure PATH so that we can access our scripts below
-PATH=$PATH:~/.cabal/bin:~/.xmonad/bin
+PATH=$PATH:~/.cabal/bin:~/.xmonad/bin:/usr/bin
 
 # Configure X
 xsetroot -cursor_name left_ptr &
-xrdb -merge ~/.Xdefaults &
-xmodmap ~/.xmodmap
-setxkbmap -option "ctrl:nocaps" &
+# xrdb -merge ~/.Xdefaults &
+xrdb -merge ~/.Xresources 
 
 # Start a window compositor. This ensures Google Chrome paints correctly.
-xcompmgr -n &
+killall xcompmgr &
+
+xmodmap ~/.Xmodmap &
+# setxkbmap -option "ctrl:nocaps" &
 
 # Set a wallpaper
-feh --bg-fill ~/.wallpaper.jpg &
+feh  --bg-fill '/home/amanda/.wallpaper/mochis_hike.jpg' &
+
+wait $!
 
 # Start the system tray
-stalonetray -c ~/.xmonad/stalonetrayrc-single &
+# stalonetray -c ~/.xmonad/stalonetrayrc-single &
 
-# Start two terminals
-gnome-terminal &
-gnome-terminal &
+# . /etc/X11/Xsession
+# xmobar ~/.xmonad/xmobar.hs &
+xcompmgr -n -c -C -t-5 -l-5 -r4.2 -o.55 -F -S &
+
+# Start terminals
 
 # Start a browser
-google-chrome &
 
 # Start screensaver
-killall gnome-screensaver &
-xscreensaver -no-splash &
+# killall gnome-screensaver &
+# xscreensaver -no-splash &
 
 # Start sound server
-pulseaudio --start --log-target=syslog &
 
-exec ck-launch-session dbus-launch --sh-syntax --exit-with-session xmonad
+# exec ck-launch-session dbus-launch --sh-syntax --exit-with-session xmonad
+exec $1
+echo "xmonad-session-rc executed"

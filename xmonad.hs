@@ -1,6 +1,7 @@
 -- xmonad config used by Vic Fryzel
 -- Author: Vic Fryzel
 -- https://github.com/vicfryzel/xmonad-config
+-- Changed 2/18/2017 - amanda flink
 
 import System.IO
 import System.Exit
@@ -26,10 +27,11 @@ import qualified Data.Map        as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal = "/usr/bin/gnome-terminal"
+myTerminal = "/usr/bin/xterm"
 
 -- The command to lock the screen or show the screensaver.
-myScreensaver = "/usr/bin/xscreensaver-command -l"
+-- myScreensaver = "/usr/bin/xscreensaver-command -l"
+myScreensaver = "/usr/bin/slimlock"
 
 -- The command to take a selective screenshot, where you select
 -- what you'd like to capture on the screen.
@@ -44,7 +46,6 @@ myLauncher = "$(yeganesh -x -- -fn 'monospace-8' -nb '#000000' -nf '#FFFFFF' -sb
 
 -- Location of your xmobar.hs / xmobarrc
 myXmobarrc = "~/.xmonad/xmobar-single.hs"
-
 
 ------------------------------------------------------------------------
 -- Workspaces
@@ -69,15 +70,15 @@ myWorkspaces = ["1:term","2:web","3:code","4:vm","5:media"] ++ map show [6..9]
 --
 myManageHook = composeAll
     [ className =? "Chromium"       --> doShift "2:web"
-    , className =? "Google-chrome"  --> doShift "2:web"
+--    , className =? "Google-chrome"  --> doShift "2:web"
     , resource  =? "desktop_window" --> doIgnore
-    , className =? "Galculator"     --> doFloat
-    , className =? "Steam"          --> doFloat
-    , className =? "Gimp"           --> doFloat
+    , className =? "python"         --> doFloat
+--    , className =? "Steam"          --> doFloat
+--    , className =? "Gimp"           --> doFloat
     , resource  =? "gpicview"       --> doFloat
-    , className =? "MPlayer"        --> doFloat
-    , className =? "VirtualBox"     --> doShift "4:vm"
-    , className =? "Xchat"          --> doShift "5:media"
+--    , className =? "MPlayer"        --> doFloat
+--    , className =? "VirtualBox"     --> doShift "4:vm"
+--    , className =? "Xchat"          --> doShift "5:media"
     , className =? "stalonetray"    --> doIgnore
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)]
 
@@ -107,23 +108,23 @@ myLayout = avoidStruts (
 -- Currently based on the ir_black theme.
 --
 myNormalBorderColor  = "#7c7c7c"
-myFocusedBorderColor = "#ffb6b0"
+myFocusedBorderColor = "#d75f00"
 
 -- Colors for text and backgrounds of each tab when in "Tabbed" layout.
 tabConfig = defaultTheme {
-    activeBorderColor = "#7C7C7C",
-    activeTextColor = "#CEFFAC",
-    activeColor = "#000000",
+    activeBorderColor = "#d75f00",
+    activeTextColor = "#d75f00",
+    activeColor = "#080808",
     inactiveBorderColor = "#7C7C7C",
     inactiveTextColor = "#EEEEEE",
-    inactiveColor = "#000000"
+    inactiveColor = "#080808"
 }
 
 -- Color of current window title in xmobar.
-xmobarTitleColor = "#FFB6B0"
+xmobarTitleColor = "#d75f00"
 
 -- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "#CEFFAC"
+xmobarCurrentWorkspaceColor = "#ffaf87"
 
 -- Width of the window border in pixels.
 myBorderWidth = 1
@@ -306,7 +307,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 -- Focus rules
 -- True if your focus should follow your mouse cursor.
 myFocusFollowsMouse :: Bool
-myFocusFollowsMouse = True
+myFocusFollowsMouse = False
 
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
   [
